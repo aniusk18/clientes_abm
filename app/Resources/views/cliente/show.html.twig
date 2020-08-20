@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">ClienteCliente</h6>
+    </div>
+    <div class="card-body">
+        <table>
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ cliente.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ cliente.nombre }}</td>
+                </tr>
+                <tr>
+                    <th>Apellido</th>
+                    <td>{{ cliente.apellido }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ cliente.email }}</td>
+                </tr>
+                <tr>
+                    <th>Grupocliente</th>
+                    <td>{% if cliente.grupoCliente %}{{ cliente.grupoCliente|join(', ') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Observaciones</th>
+                    <td>{{ cliente.observaciones }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ul>
+        <li>
+            <a href="{{ path('cliente_index') }}">Volver a listado</a>
+        </li>
+        <li>
+            <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}">Editar</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Eliminar">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Listado de clientes</h6>
+            </div>
+            <div class="card-body">
+                <!-- Topbar Search -->
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" >
+                    <div class="input-group" style="margin-bottom: 16px;">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2"  id="search" name="search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Grupo</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cliente in clientes %}
+                            <tr>
+                                <td>{{ cliente.nombre }}</td>
+                                <td>{{ cliente.apellido }}</td>
+                                <td>{{ cliente.email }}</td>
+                                <td>{% if cliente.grupoCliente %}{{ cliente.grupoCliente|join(', ') }}{% endif %}</td>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <a href="{{ path('cliente_show', { 'id': cliente.id }) }}">show</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}">edit</a>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="btn btn-danger del" onclick="show_delete_cliente('{{cliente.id}}')"><i class="fa fa-minus-square"></i> eliminar</button>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <div id="pager">
+                    {% if last_page > 1 %}
+                    <nav aria-label="table Page navigation ">
+                        <ul class="pagination justify-content-end">
+                            {% if nro_pag > 1 %}
+                                {% set page_number = (nro_pag - 1) %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('cliente_index', {pag:1}) }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Anterior</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if nro_pag > 5 %}
+                                {% set page_number = (nro_pag - 5) %}
+                                 <li class="page-item"><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag > 4 %}
+                                {% set page_number = (nro_pag - 4) %}
+                                 <li class="page-item"><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag > 3 %}
+                                {% set page_number = (nro_pag - 3) %}
+                                 <li class="page-item"><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag > 2 %}
+                                {% set page_number = (nro_pag - 2) %}
+                                <li class="page-item"><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag != 1 and nro_pag != null  %}
+                                {% set page_number = (nro_pag - 1) %}
+                                 <li class="page-item "><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            <li class="page-item active"><a class="page-link " href="{{ path('cliente_index', {pag:nro_pag}) }}">{{nro_pag}}</a></li>
+                            {% if nro_pag != last_page  %}
+                                {% set page_number = (nro_pag + 1) %}
+                                <li class="page-item "><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag < (last_page-1) and nro_pag != null  %}
+                                {% set page_number = (nro_pag + 2) %}
+                                 <li class="page-item "><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag < (last_page-2) and nro_pag != null  %}
+                                {% set page_number = (nro_pag + 3) %}
+                                 <li class="page-item "><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag < (last_page-3) and nro_pag != null  %}
+                                {% set page_number = (nro_pag + 4) %}
+                                <li class="page-item "><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag < (last_page-4) and nro_pag != null  %}
+                                {% set page_number = (nro_pag + 5) %}
+                                <li class="page-item "><a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}">{{page_number}}</a></li>
+                            {% endif %}
+                            {% if nro_pag+1 <= last_page  %}
+                                {% set page_number = (nro_pag + 1) %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if nro_pag < last_page  %}
+                                 <li class="page-item">
+                                    <a class="page-link" href="{{ path('cliente_index', {pag:page_number}) }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;&raquo;</span>
+                                        <span class="sr-only">Last</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <ul>
+        <li>
+            <a href="{{ path('cliente_new') }}">Crear nuevo cliente</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var search_action= "{{ path('cliente_search') }}";
+        var get_all_clientes= "{{ path('get_all_clientes') }}";
+        var cliente_index= "{{ path('cliente_index', {pag:''}) }}";
+
+    </script>
+
+{% endblock %}

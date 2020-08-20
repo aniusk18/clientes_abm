@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Crear Cliente</h6>
+    </div>
+    <div class="card-body">
+        {{ form_start(form , {'attr': {'class': 'user'}}) }}
+        <div class="form-group row">
+            <div class="col-sm-3 mb-3 mb-sm-0">
+                {{ form_label(form.nombre, 'Nombre') }}
+                {{ form_widget(form.nombre, {'attr': {'class': 'form-control form-control-user'}}) }}
+            </div>
+            <div class="col-sm-3 mb-3 mb-sm-0">
+                {{ form_label(form.apellido, 'Apellido') }}
+                {{ form_widget(form.apellido, {'attr': {'class': 'form-control form-control-user'}}) }}
+            </div>
+            <div class="col-sm-3 mb-3 mb-sm-0">
+                {{ form_label(form.email, 'Email') }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-user'}}) }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3 mb-3 mb-sm-0 grupo">
+                {{ form_label(form.grupoCliente, 'Grupo') }}
+                {{ form_widget(form.grupoCliente, {'attr': {'class': ''}}) }}
+            </div>
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                {{ form_label(form.observaciones, 'Observaciones') }}
+                {{ form_widget(form.observaciones, {'attr': {'class': 'form-control form-control-user'}}) }}
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+        <div class="col-sm-3 mb-3 mb-sm-0 text-center">
+        <input type="submit" value="Guardar" class="btn btn-primary btn-user btn-block" />
+        </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+    <ul>
+        <li>
+            <a href="{{ path('cliente_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
